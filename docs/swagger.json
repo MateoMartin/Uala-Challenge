@@ -1,0 +1,25 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Twitter service for Uala challenge",
+        "title": "Uala Challenge API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "paths": {
+        "/status": {
+            "get": {
+                "description": "Indicate the service has started up correctly and is ready to accept requests.",
+                "summary": "Service Status",
+                "operationId": "getStatus",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        }
+    }
+}

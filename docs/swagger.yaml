@@ -1,0 +1,18 @@
+basePath: /
+host: localhost:8080
+info:
+  contact: {}
+  description: Twitter service for Uala challenge
+  title: Uala Challenge API
+  version: "1.0"
+paths:
+  /status:
+    get:
+      description: Indicate the service has started up correctly and is ready to accept
+        requests.
+      operationId: getStatus
+      responses:
+        "200":
+          description: OK
+      summary: Service Status
+swagger: "2.0"
