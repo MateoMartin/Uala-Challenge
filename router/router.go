@@ -12,7 +12,7 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-func SetupRouter(cfg *config.Config, getStatusHandler gin.HandlerFunc) *gin.Engine {
+func SetupRouter(cfg *config.Config, getStatusHandler, createTweetHandler gin.HandlerFunc) *gin.Engine {
 	gin.SetMode(gin.ReleaseMode)
 
 	router := gin.New()
@@ -25,8 +25,9 @@ func SetupRouter(cfg *config.Config, getStatusHandler gin.HandlerFunc) *gin.Engi
 	router.NoMethod(middleware.MethodNotAllowed)
 
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-
 	router.GET("/status", middleware.Timeout(time.Millisecond*time.Duration(cfg.GetStatusTimeout)), getStatusHandler)
+
+	router.POST("/tweet", middleware.Timeout(time.Millisecond*time.Duration(cfg.CreateTweetTimeout)), createTweetHandler)
 
 	return router
 }

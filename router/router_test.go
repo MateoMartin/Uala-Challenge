@@ -15,7 +15,7 @@ func mockHandler(c *gin.Context) {
 }
 
 func TestSetupRouter(t *testing.T) {
-	router := SetupRouter(config.LoadConfig(), mockHandler)
+	router := SetupRouter(config.LoadConfig(), mockHandler, mockHandler)
 
 	tests := []struct {
 		method   string
@@ -23,6 +23,7 @@ func TestSetupRouter(t *testing.T) {
 		status   int
 	}{
 		{"GET", "/status", http.StatusOK},
+		{"POST", "/tweet", http.StatusOK},
 	}
 
 	for _, tt := range tests {

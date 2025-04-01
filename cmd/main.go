@@ -19,6 +19,7 @@ func main() {
 	router := router.SetupRouter(
 		cfg,
 		container.GetStatusHandler,
+		container.CreateTweetHandler,
 	)
 
 	logger.GetLogger().Infof("Service is starting at port %s", cfg.Port)
