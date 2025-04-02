@@ -11,5 +11,6 @@ func TestLoadContainer(t *testing.T) {
 
 	assert.NotNil(t, container.GetStatusHandler, "GetStatusHandler should not be nil")
 	assert.NotNil(t, container.CreateTweetHandler, "CreateTweetHandler should not be nil")
+	assert.NotNil(t, container.FollowUserHandler, "FollowUserHandler should not be nil")
 
 }
