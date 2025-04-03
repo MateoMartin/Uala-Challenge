@@ -43,6 +43,7 @@ func TestCreateTweetUseCase_CreateTweet(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			repo := new(mocks.TweetRepository)
 			publisher := new(mocks.EventPublisher)
+			publisher.On("Publish", mock.Anything).Return(nil)
 			tt.setupMocks(repo)
 
 			useCase := NewCreateTweetUseCase(repo, publisher)

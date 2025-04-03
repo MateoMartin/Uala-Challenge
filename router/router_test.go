@@ -15,7 +15,7 @@ func mockHandler(c *gin.Context) {
 }
 
 func TestSetupRouter(t *testing.T) {
-	router := SetupRouter(config.LoadConfig(), mockHandler, mockHandler)
+	router := SetupRouter(config.LoadConfig(), mockHandler, mockHandler, mockHandler, mockHandler)
 
 	tests := []struct {
 		method   string
