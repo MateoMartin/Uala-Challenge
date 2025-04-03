@@ -7,6 +7,8 @@ import (
 	followUserHandler "uala-challenge/internal/domain/follow_user/handler"
 	followUserUseCase "uala-challenge/internal/domain/follow_user/usecase"
 	getStatusHandler "uala-challenge/internal/domain/get_status/handler"
+	getTimelineHandler "uala-challenge/internal/domain/get_timeline/handler"
+	getTimelineUseCase "uala-challenge/internal/domain/get_timeline/usecase"
 	timelineConsumer "uala-challenge/internal/domain/update_timeline/consumer"
 	eventPublisher "uala-challenge/internal/infrastructure/event"
 	timelineRepository "uala-challenge/internal/infrastructure/timeline/repository"
@@ -19,6 +21,7 @@ type container struct {
 	GetStatusHandler   gin.HandlerFunc
 	CreateTweetHandler gin.HandlerFunc
 	FollowUserHandler  gin.HandlerFunc
+	GetTimelineHandler gin.HandlerFunc
 }
 
 func LoadContainer() *container {
@@ -31,10 +34,12 @@ func LoadContainer() *container {
 
 	createTweetUseCase := createTweetUseCase.NewCreateTweetUseCase(tweetRepository, eventPublisher)
 	followUserUseCase := followUserUseCase.NewFollowUserUseCase(userRepository)
+	getTimelineUseCase := getTimelineUseCase.NewTimelineUseCase(timelineRepository)
 
 	getStatusHandler := getStatusHandler.NewGetStatusHandler()
 	createTweetHandler := createTweetHandler.NewCreateTweetHandler(createTweetUseCase)
-	followUserTweetHandler := followUserHandler.NewFollowUserHandler(followUserUseCase)
+	followUserHandler := followUserHandler.NewFollowUserHandler(followUserUseCase)
+	getTimelineHandler := getTimelineHandler.NewGetTimelineHandler(getTimelineUseCase)
 
 	timelineUpdaterConsumer := timelineConsumer.NewUpdateTimelineConsumer(eventChannel, timelineRepository, userRepository, 5000)
 	timelineUpdaterConsumer.Start()
@@ -42,6 +47,7 @@ func LoadContainer() *container {
 	return &container{
 		GetStatusHandler:   getStatusHandler.Handle,
 		CreateTweetHandler: createTweetHandler.Handle,
-		FollowUserHandler:  followUserTweetHandler.Handle,
+		FollowUserHandler:  followUserHandler.Handle,
+		GetTimelineHandler: getTimelineHandler.Handle,
 	}
 }

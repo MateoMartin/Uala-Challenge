@@ -21,6 +21,7 @@ func main() {
 		container.GetStatusHandler,
 		container.CreateTweetHandler,
 		container.FollowUserHandler,
+		container.GetTimelineHandler,
 	)
 
 	logger.GetLogger().Infof("Service is starting at port %s", cfg.Port)
