@@ -42,9 +42,10 @@ func TestCreateTweetUseCase_CreateTweet(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			repo := new(mocks.TweetRepository)
+			publisher := new(mocks.EventPublisher)
 			tt.setupMocks(repo)
 
-			useCase := NewCreateTweetUseCase(repo)
+			useCase := NewCreateTweetUseCase(repo, publisher)
 			err := useCase.CreateTweet(context.Background(), tt.tweet)
 
 			if tt.expectedError != nil {
