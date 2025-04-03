@@ -17,6 +17,10 @@ import (
 	"uala-challenge/internal/model"
 )
 
+const (
+	timelineUpdateMaxTime = 5000
+)
+
 type container struct {
 	GetStatusHandler   gin.HandlerFunc
 	CreateTweetHandler gin.HandlerFunc
@@ -41,7 +45,7 @@ func LoadContainer() *container {
 	followUserHandler := followUserHandler.NewFollowUserHandler(followUserUseCase)
 	getTimelineHandler := getTimelineHandler.NewGetTimelineHandler(getTimelineUseCase)
 
-	timelineUpdaterConsumer := timelineConsumer.NewUpdateTimelineConsumer(eventChannel, timelineRepository, userRepository, 5000)
+	timelineUpdaterConsumer := timelineConsumer.NewUpdateTimelineConsumer(eventChannel, timelineRepository, userRepository, timelineUpdateMaxTime)
 	timelineUpdaterConsumer.Start()
 
 	return &container{
