@@ -32,7 +32,7 @@ func NewCreateTweetHandler(useCase createTweetUseCase) *createTweetHandler {
 // @Success 201 "Created"
 // @Failure 400 "Bad Request"
 // @Failure 500 "Internal Server Error"
-// @Router /tweets [post]
+// @Router /tweet [post]
 func (h *createTweetHandler) Handle(ctx *gin.Context) {
 	var request createTweetDTO
 	err := ctx.BindJSON(&request)

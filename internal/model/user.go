@@ -18,7 +18,7 @@ func (u *User) AddFollower(followerId string) error {
 			break
 		}
 	}
-	if !exist {
+	if !exist && followerId != u.ID {
 		u.Followers = append(u.Followers, followerId)
 	}
 	return nil
@@ -32,7 +32,7 @@ func (u *User) AddFollowing(followingId string) error {
 			break
 		}
 	}
-	if !exist {
+	if !exist && followingId != u.ID {
 		u.Following = append(u.Following, followingId)
 	}
 

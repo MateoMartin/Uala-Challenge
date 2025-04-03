@@ -1,4 +1,29 @@
 basePath: /
+definitions:
+  handler.createTweetDTO:
+    properties:
+      content:
+        example: Hello!
+        type: string
+      user_id:
+        example: 0f089136-3f38-4757-840c-d0c954782457
+        type: string
+    required:
+    - content
+    - user_id
+    type: object
+  handler.followUserDTO:
+    properties:
+      user_id:
+        example: 0f089136-3f38-4757-840c-d0c954782457
+        type: string
+      user_id_to_follow:
+        example: 0f089136-3f38-4757-840c-d0c954782457
+        type: string
+    required:
+    - user_id
+    - user_id_to_follow
+    type: object
 host: localhost:8080
 info:
   contact: {}
@@ -6,6 +31,29 @@ info:
   title: Uala Challenge API
   version: "1.0"
 paths:
+  /follow:
+    post:
+      consumes:
+      - application/json
+      description: follows an user
+      operationId: followUser
+      parameters:
+      - description: Follow User
+        in: body
+        name: tweet
+        required: true
+        schema:
+          $ref: '#/definitions/handler.followUserDTO'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Server Error
+      summary: Follow User
   /status:
     get:
       description: Indicate the service has started up correctly and is ready to accept
@@ -15,4 +63,45 @@ paths:
         "200":
           description: OK
       summary: Service Status
+  /timeline/{user_id}:
+    get:
+      description: Get timeline of tweets for a user
+      operationId: getTimeline
+      parameters:
+      - description: User ID
+        in: path
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "500":
+          description: Internal Server Error
+      summary: Get Timeline
+  /tweet:
+    post:
+      consumes:
+      - application/json
+      description: tweet to post
+      operationId: createTweet
+      parameters:
+      - description: Tweet Request
+        in: body
+        name: tweet
+        required: true
+        schema:
+          $ref: '#/definitions/handler.createTweetDTO'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Server Error
+      summary: Create Tweet
 swagger: "2.0"

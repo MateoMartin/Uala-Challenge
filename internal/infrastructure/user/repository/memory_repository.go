@@ -26,10 +26,14 @@ func (r *inMemoryUserRepository) FollowUser(ctx context.Context, userID string, 
 	userDto := r.usersByID[userID]
 	userToFollowDto := r.usersByID[UserIDToFollow]
 	if userDto == nil {
-		userDto = newDTOFromModel(model.NewUser())
+		user := model.NewUser()
+		user.ID = userID
+		userDto = newDTOFromModel(user)
 	}
 	if userToFollowDto == nil {
-		userToFollowDto = newDTOFromModel(model.NewUser())
+		user := model.NewUser()
+		user.ID = UserIDToFollow
+		userToFollowDto = newDTOFromModel(user)
 	}
 
 	user := userDto.toModel()
@@ -48,6 +52,9 @@ func (r *inMemoryUserRepository) GetUser(ctx context.Context, userID string) (*m
 	r.mutex.RLock()
 	defer r.mutex.RUnlock()
 	userDto := r.usersByID[userID]
+	if userDto == nil {
+		return model.NewUser(), nil
+	}
 
 	return userDto.toModel(), nil
 }

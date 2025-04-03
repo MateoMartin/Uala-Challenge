@@ -9,6 +9,41 @@
     "host": "localhost:8080",
     "basePath": "/",
     "paths": {
+        "/follow": {
+            "post": {
+                "description": "follows an user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Follow User",
+                "operationId": "followUser",
+                "parameters": [
+                    {
+                        "description": "Follow User",
+                        "name": "tweet",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handler.followUserDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
         "/status": {
             "get": {
                 "description": "Indicate the service has started up correctly and is ready to accept requests.",
@@ -18,6 +53,104 @@
                     "200": {
                         "description": "OK"
                     }
+                }
+            }
+        },
+        "/timeline/{user_id}": {
+            "get": {
+                "description": "Get timeline of tweets for a user",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get Timeline",
+                "operationId": "getTimeline",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/tweet": {
+            "post": {
+                "description": "tweet to post",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Create Tweet",
+                "operationId": "createTweet",
+                "parameters": [
+                    {
+                        "description": "Tweet Request",
+                        "name": "tweet",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handler.createTweetDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "handler.createTweetDTO": {
+            "type": "object",
+            "required": [
+                "content",
+                "user_id"
+            ],
+            "properties": {
+                "content": {
+                    "type": "string",
+                    "example": "Hello!"
+                },
+                "user_id": {
+                    "type": "string",
+                    "example": "0f089136-3f38-4757-840c-d0c954782457"
+                }
+            }
+        },
+        "handler.followUserDTO": {
+            "type": "object",
+            "required": [
+                "user_id",
+                "user_id_to_follow"
+            ],
+            "properties": {
+                "user_id": {
+                    "type": "string",
+                    "example": "0f089136-3f38-4757-840c-d0c954782457"
+                },
+                "user_id_to_follow": {
+                    "type": "string",
+                    "example": "0f089136-3f38-4757-840c-d0c954782457"
                 }
             }
         }
