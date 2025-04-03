@@ -2,7 +2,7 @@
 
 ## High-Level Architecture Overview
 
-![img_1.png](Architecture Project.png)
+![architecture_project.png](architecture_project.png)
 
 ### In-Memory Data Storage and Concurrency Control
 The application is built using in-memory data stores and employs mutexes to prevent race conditions among concurrent goroutines.
@@ -18,7 +18,7 @@ For this challenge solution, I did not enforce a limit on the number of tweets p
 
 ## High-Level Production Architecture
 
-![img.png](Architecture Productive.png)
+![architecture_productive.png](architecture_productive.png)
 
 For a production-ready system, My idea of the architecture is:
 
